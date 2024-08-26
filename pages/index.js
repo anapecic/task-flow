@@ -1,11 +1,11 @@
 import Header from "@/components/Header/Header";
 import ToDos from "@/components/ToDos/ToDos";
 
-export default function HomePage() {
+export default function HomePage({ currentTasks }) {
   return (
     <>
       <Header />
-      <ToDos />
+      <ToDos currentTasks={currentTasks} />
     </>
   );
 }
