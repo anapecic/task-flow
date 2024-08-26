@@ -1,7 +1,11 @@
+import Header from "@/components/Header/Header";
+import ToDos from "@/components/ToDos/ToDos";
+
 export default function HomePage() {
   return (
-    <div>
-      <h1>Hello from Next.js</h1>
-    </div>
+    <>
+      <Header />
+      <ToDos />
+    </>
   );
 }
