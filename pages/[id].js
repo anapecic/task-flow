@@ -9,6 +9,10 @@ export default function DetailsPage({ currentTasks }) {
   const dynamicId = router.query.id;
   const currentTask = currentTasks.find((task) => task.id === dynamicId);
 
+  if (!currentTask) {
+    return <p>Task not found</p>;
+  }
+
   const today = new Date();
   const dueDate = new Date(currentTask?.dueDate);
   const pastDueDate = today >= dueDate;
