@@ -10,7 +10,7 @@ export default function DetailsPage({ currentTasks }) {
   const currentTask = currentTasks.find((task) => task.id === dynamicId);
 
   const today = new Date();
-  const dueDate = new Date(currentTask.dueDate);
+  const dueDate = new Date(currentTask?.dueDate);
   const pastDueDate = today >= dueDate;
 
   return (
