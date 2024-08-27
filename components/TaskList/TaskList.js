@@ -7,11 +7,13 @@ const StyledList = styled.ul`
 
 export default function TaskList({ sortedDefaultTasks }) {
   return (
-    <StyledList>
+    <>
       <h2>Tasks</h2>
-      {sortedDefaultTasks.map((task) => (
-        <Task key={task.id} task={task} />
-      ))}
-    </StyledList>
+      <StyledList>
+        {sortedDefaultTasks.map((task) => (
+          <Task key={task.id} task={task} />
+        ))}
+      </StyledList>
+    </>
   );
 }

@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { StyledPriority } from "../StyledPriority";
+import { StyledTaskFlexWrapper } from "../StyledTaskFlexWrapper";
+import { StyledDate } from "../StyledDate";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: #000000;
 `;
 
 const StyledTask = styled.li`
@@ -12,50 +15,22 @@ const StyledTask = styled.li`
   margin: 0.5rem;
 `;
 
-const StyledTaskInfo = styled.div`
-  display: flex;
-  gap: 0.5rem;
-`;
-
-const StyledPriority = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: ${(props) => prioColor(props.$priority)};
-`;
-
-const StyledDate = styled.p`
-  color: ${(props) => props.$dateColor};
-  margin: 0;
-  padding: 0;
-`;
-
 const StyledTaskTitle = styled.h3``;
-
-function prioColor(priority) {
-  if (priority === "High") {
-    return "red";
-  } else if (priority === "Medium") {
-    return "yellow";
-  } else if (priority === "Low") {
-    return "green";
-  }
-}
 
 export default function Task({ task }) {
   const today = new Date();
-  const dueDate = new Date(task.dueDate);
+  const dueDate = new Date(task?.dueDate);
   const pastDueDate = today >= dueDate;
 
   return (
     <StyledLink href={`/${task.id}`}>
       <StyledTask>
-        <StyledTaskInfo>
+        <StyledTaskFlexWrapper>
           <StyledPriority $priority={task.priority} />
           <StyledDate $dateColor={pastDueDate ? "red" : "black"}>
             {task.dueDate}
           </StyledDate>
-        </StyledTaskInfo>
+        </StyledTaskFlexWrapper>
         <StyledTaskTitle>{task.title}</StyledTaskTitle>
       </StyledTask>
     </StyledLink>

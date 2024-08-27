@@ -3,9 +3,11 @@ import TaskList from "@/components/TaskList/TaskList";
 
 export default function HomePage({ sortedDefaultTasks }) {
   return (
-    <main>
+    <>
       <Header />
-      <TaskList sortedDefaultTasks={sortedDefaultTasks} />
-    </main>
+      <main>
+        <TaskList sortedDefaultTasks={sortedDefaultTasks} />
+      </main>
+    </>
   );
 }

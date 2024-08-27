@@ -10,6 +10,6 @@ const ButtonStyle = styled.button`
   color: white;
 `;
 
-export default function BackButton({ btnContent, handleClick }) {
-  return <ButtonStyle onClick={handleClick}>{btnContent}</ButtonStyle>;
+export default function BackButton({ butttonContent, handleClick }) {
+  return <ButtonStyle onClick={handleClick}>{butttonContent}</ButtonStyle>;
 }

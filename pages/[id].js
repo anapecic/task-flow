@@ -1,8 +1,22 @@
 import { useRouter } from "next/router";
 import Header from "@/components/Header/Header";
-import prioColor from "@/utils/prioColor";
-import Link from "next/link";
 import BackButton from "@/components/BackButton/BackButton";
+import styled from "styled-components";
+import { StyledPriority } from "@/components/StyledPriority";
+import { StyledTaskFlexWrapper } from "@/components/StyledTaskFlexWrapper";
+import { StyledDate } from "@/components/StyledDate";
+
+const StyledDetailsPage = styled.section`
+  border: 1px solid #000000;
+  padding: 1rem;
+  margin: 0.5rem;
+`;
+
+const StyledDescription = styled.aside`
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 0.5rem;
+`;
 
 export default function DetailsPage({ sortedDefaultTasks }) {
   const router = useRouter();
@@ -20,37 +34,20 @@ export default function DetailsPage({ sortedDefaultTasks }) {
   return (
     <>
       <Header />
-      <div
-        style={{ border: "1px solid black", padding: "1rem", margin: "0.5rem" }}
-      >
-        <div style={{ display: "flex", gap: "0.5rem" }}>
-          <div
-            style={{
-              width: "20px",
-              height: "20px",
-              borderRadius: "50%",
-              background: prioColor(currentTask),
-            }}
-          ></div>
-          <div style={{ color: pastDueDate ? "red" : "black" }}>
-            {currentTask.dueDate}
-          </div>
-        </div>
-        <h3 style={{ color: "black" }}>{currentTask.title}</h3>
-        <div
-          style={{
-            border: "1px solid black",
-            padding: "1rem",
-            margin: "0.5rem",
-          }}
-        >
+      <StyledDetailsPage>
+        <StyledTaskFlexWrapper>
+          <StyledPriority $priority={currentTask.priority} />
+          <StyledDate $dateColor={pastDueDate ? "red" : "black"} />
+        </StyledTaskFlexWrapper>
+        <h3>{currentTask.title}</h3>
+        <StyledDescription>
           <p>{currentTask.description}</p>
           <BackButton
             handleClick={() => router.push("/")}
-            btnContent="&larr;"
+            butttonContent="&larr;"
           />
-        </div>
-      </div>
+        </StyledDescription>
+      </StyledDetailsPage>
     </>
   );
 }
