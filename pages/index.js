@@ -1,11 +1,11 @@
 import Header from "@/components/Header/Header";
-import ToDos from "@/components/ToDos/ToDos";
+import TaskList from "@/components/TaskList/TaskList";
 
-export default function HomePage({ currentTasks }) {
+export default function HomePage({ sortedDefaultTasks }) {
   return (
-    <>
+    <main>
       <Header />
-      <ToDos currentTasks={currentTasks} />
-    </>
+      <TaskList sortedDefaultTasks={sortedDefaultTasks} />
+    </main>
   );
 }

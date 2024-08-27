@@ -4,10 +4,10 @@ import prioColor from "@/utils/prioColor";
 import Link from "next/link";
 import BackButton from "@/components/BackButton/BackButton";
 
-export default function DetailsPage({ currentTasks }) {
+export default function DetailsPage({ sortedDefaultTasks }) {
   const router = useRouter();
   const dynamicId = router.query.id;
-  const currentTask = currentTasks.find((task) => task.id === dynamicId);
+  const currentTask = sortedDefaultTasks.find((task) => task.id === dynamicId);
 
   if (!currentTask) {
     return <p>Task not found</p>;
