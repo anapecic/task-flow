@@ -1,11 +1,11 @@
 import Header from "@/components/Header/Header";
-import ToDos from "@/components/ToDos/ToDos";
+import TaskList from "@/components/TaskList/TaskList";
 
 export default function HomePage() {
   return (
-    <>
+    <main>
       <Header />
-      <ToDos />
-    </>
+      <TaskList />
+    </main>
   );
 }

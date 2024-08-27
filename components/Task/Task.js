@@ -1,36 +1,55 @@
-export default function Task({ task }) {
-  function prioColor() {
-    if (task.priority === "High") {
-      return "red";
-    } else if (task.priority === "Medium") {
-      return "yellow";
-    } else if (task.priority === "Low") {
-      return "green";
-    }
-  }
+import styled from "styled-components";
 
+const StyledTask = styled.li`
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 0.5rem;
+`;
+
+const StyledTaskInfo = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const StyledPriority = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: ${(props) => prioColor(props.$priority)};
+`;
+
+const StyledDate = styled.p`
+  color: ${(props) => props.$dateColor};
+  margin: 0;
+  padding: 0;
+`;
+
+const StyledTaskTitle = styled.h3``;
+
+function prioColor(priority) {
+  if (priority === "High") {
+    return "red";
+  } else if (priority === "Medium") {
+    return "yellow";
+  } else if (priority === "Low") {
+    return "green";
+  }
+}
+
+export default function Task({ task }) {
   const today = new Date();
   const dueDate = new Date(task.dueDate);
   const pastDueDate = today >= dueDate;
 
   return (
-    <div
-      style={{ border: "1px solid black", padding: "1rem", margin: "0.5rem" }}
-    >
-      <div style={{ display: "flex", gap: "0.5rem" }}>
-        <div
-          style={{
-            width: "20px",
-            height: "20px",
-            borderRadius: "50%",
-            background: prioColor(),
-          }}
-        ></div>
-        <div style={{ color: pastDueDate ? "red" : "black" }}>
+    <StyledTask>
+      <StyledTaskInfo>
+        <StyledPriority $priority={task.priority} />
+        <StyledDate $dateColor={pastDueDate ? "red" : "black"}>
           {task.dueDate}
-        </div>
-      </div>
-      <h3>{task.title}</h3>
-    </div>
+        </StyledDate>
+      </StyledTaskInfo>
+      <StyledTaskTitle>{task.title}</StyledTaskTitle>
+    </StyledTask>
   );
 }
