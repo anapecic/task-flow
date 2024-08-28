@@ -3,9 +3,10 @@ import TaskList from "@/components/TaskList/TaskList";
 import CreateTaskForm from "@/components/CreateTaskForm/CreateTaskForm";
 import styled from "styled-components";
 import { useState } from "react";
+import Filter from "@/components/Filter/Filter";
 
 const StyledCreateButton = styled.button`
-  border: 1px solid black;
+  border: 3px solid black;
   border-radius: 50%;
   background: grey;
   text-decoration: none;
@@ -64,15 +65,5 @@ export default function HomePage({
         )}
       </main>
     </>
-  );
-}
-
-function Filter({ sortMode, onSetFilter }) {
-  return (
-    <select onChange={(event) => onSetFilter(event.target.value)}>
-      <option value="date">Due Date</option>
-      <option value="prioAscending">Prio ⬆️</option>
-      <option value="prioDescending">Prio ⬇️</option>
-    </select>
   );
 }
