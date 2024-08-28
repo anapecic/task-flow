@@ -80,7 +80,9 @@ export default function CreateTaskForm({
           <option value="Low">🟢 Low</option>
         </select>
         <button type="submit">submit</button>
-        <button onClick={onCancel}>cancel</button>
+        <button type="button" onClick={onCancel}>
+          cancel
+        </button>
       </StyledTaskForm>
     </>
   );
