@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import transformDateType from "@/utils/transformDateType";
 
 const StyledTaskForm = styled.form`
   position: absolute;
@@ -13,8 +14,14 @@ const StyledTaskForm = styled.form`
   border: 1px solid #000;
 `;
 
-export default function CreateTaskForm({ onSubmitTask, onCancel }) {
-  const today = new Date().toISOString().split("T")[0];
+export default function CreateTaskForm({
+  onSubmitTask,
+  onCancel,
+  placeholderObject,
+  editMode,
+  formTitle,
+}) {
+  const today = transformDateType(new Date());
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -27,14 +34,16 @@ export default function CreateTaskForm({ onSubmitTask, onCancel }) {
   return (
     <>
       <StyledTaskForm onSubmit={handleSubmit}>
-        <h2>Create a new task</h2>
+        <h2>{formTitle}</h2>
         <label htmlFor="taskName">Task title</label>
         <input
           type="text"
           id="taskName"
           name="title"
           maxLength="40"
-          placeholder="go grocery shopping"
+          placeholder={
+            editMode ? placeholderObject.title : "go grocery shopping"
+          }
           required
         />
         <label htmlFor="taskDescription">Description</label>
@@ -43,18 +52,26 @@ export default function CreateTaskForm({ onSubmitTask, onCancel }) {
           id="taskDescription"
           name="description"
           maxLength="500"
-          placeholder="buy 10 apples and 2 gallons of milk"
+          placeholder={
+            editMode
+              ? placeholderObject.description
+              : "buy 5 apples and 1 gallon of milk"
+          }
         ></input>
         <label htmlFor="dueDate">Due Date</label>
         <input
           type="date"
           id="dueDate"
           name="dueDate"
-          defaultValue={today}
+          defaultValue={editMode ? placeholderObject.dueDate : today}
           required
         />
         <label htmlFor="priority">Priority</label>
-        <select defaultValue="" name="priority" required>
+        <select
+          defaultValue={editMode ? placeholderObject.priority : ""}
+          name="priority"
+          required
+        >
           <option disabled value="">
             --Choose a priority--
           </option>

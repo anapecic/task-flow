@@ -32,6 +32,7 @@ export default function HomePage({ currentTasks, onCreateTask }) {
         <TaskList currentTasks={currentTasks} />
         {createMode ? (
           <CreateTaskForm
+            formTitle="Create new task"
             onSubmitTask={(taskData) => {
               onCreateTask(taskData);
               setCreateMode(false);

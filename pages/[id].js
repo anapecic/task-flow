@@ -83,7 +83,13 @@ export default function DetailsPage({
             Delete
           </button>
           {editMode ? (
-            <CreateTaskForm onCancel={handleCancel} onSubmitTask={onEditTask} />
+            <CreateTaskForm
+              onCancel={handleCancel}
+              onSubmitTask={onEditTask}
+              placeholderObject={currentTask}
+              editMode={editMode}
+              formTitle="Edit your Task"
+            />
           ) : (
             <button onClick={handleToggleEdit}>Edit</button>
           )}
