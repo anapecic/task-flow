@@ -18,7 +18,12 @@ const StyledCreateButton = styled.button`
   right: 50px;
 `;
 
-export default function HomePage({ currentTasks, onCreateTask }) {
+export default function HomePage({
+  currentTasks,
+  onCreateTask,
+  onSetCompleted,
+  completedTasks,
+}) {
   const [createMode, setCreateMode] = useState(false);
 
   function handleCancel() {
@@ -29,7 +34,17 @@ export default function HomePage({ currentTasks, onCreateTask }) {
     <>
       <Header />
       <main>
-        <TaskList currentTasks={currentTasks} />
+        <TaskList
+          tasks={currentTasks}
+          onSetCompleted={onSetCompleted}
+          listTitle="Tasks"
+          completedStyle={false}
+        />
+        <TaskList
+          tasks={completedTasks}
+          listTitle="Completed Tasks"
+          completedStyle={true}
+        />
         {createMode ? (
           <CreateTaskForm
             formTitle="Create new task"

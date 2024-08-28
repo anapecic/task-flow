@@ -5,13 +5,23 @@ const StyledList = styled.ul`
   list-style-type: none;
 `;
 
-export default function TaskList({ currentTasks }) {
+export default function TaskList({
+  tasks,
+  onSetCompleted,
+  listTitle,
+  completedStyle,
+}) {
   return (
     <>
-      <h1>Tasks</h1>
+      <h1>{listTitle}</h1>
       <StyledList>
-        {currentTasks.map((task) => (
-          <Task key={task.id} task={task} />
+        {tasks.map((task) => (
+          <Task
+            key={task.id}
+            task={task}
+            onSetCompleted={onSetCompleted}
+            completedStyle={completedStyle}
+          />
         ))}
       </StyledList>
     </>

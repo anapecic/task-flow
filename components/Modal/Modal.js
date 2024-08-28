@@ -34,7 +34,13 @@ export default function Modal({ children, onConfirm, onClose }) {
     <ModalOverlay>
       <ModalContent>
         {children}
-        <Button type="button" onClick={onConfirm}>
+        <Button
+          type="button"
+          onClick={(event) => {
+            event.preventDefault();
+            onConfirm();
+          }}
+        >
           Yes
         </Button>
         <Button type="button" onClick={onClose}>

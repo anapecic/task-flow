@@ -33,7 +33,7 @@ const StyledBackLink = styled(Link)`
 
 export default function DetailsPage({
   currentTasks,
-  handleConfirm,
+  handleConfirmDelete,
   handleEditTask,
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +96,7 @@ export default function DetailsPage({
           {isOpen && (
             <Modal
               onClose={closeModal}
-              onConfirm={(event) => handleConfirm(event, dynamicId)}
+              onConfirm={(event) => handleConfirmDelete(event, dynamicId)}
             >
               <p>Are you sure you want to delete this task?</p>
             </Modal>
