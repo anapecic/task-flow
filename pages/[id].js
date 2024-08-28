@@ -7,6 +7,7 @@ import { StyledDate } from "@/components/StyledDate";
 import Link from "next/link";
 import Modal from "@/components/Modal/Modal";
 import { useState } from "react";
+import CreateTaskForm from "@/components/CreateTaskForm/CreateTaskForm";
 
 const StyledDetailsPage = styled.section`
   border: 1px solid #000000;
@@ -30,8 +31,13 @@ const StyledBackLink = styled(Link)`
   color: white;
 `;
 
-export default function DetailsPage({ currentTasks, handleConfirm }) {
+export default function DetailsPage({
+  currentTasks,
+  handleConfirm,
+  handleEditTask,
+}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const router = useRouter();
   const dynamicId = router.query.id;
   const currentTask = currentTasks?.find((task) => task.id === dynamicId);
@@ -42,6 +48,18 @@ export default function DetailsPage({ currentTasks, handleConfirm }) {
 
   function closeModal() {
     setIsOpen(false);
+  }
+
+  function handleToggleEdit() {
+    setEditMode(!editMode);
+  }
+
+  function handleCancel() {
+    setEditMode(false);
+  }
+
+  function onEditTask(taskData) {
+    handleEditTask(taskData, dynamicId);
   }
 
   const today = new Date();
@@ -64,6 +82,11 @@ export default function DetailsPage({ currentTasks, handleConfirm }) {
           <button type="button" onClick={() => setIsOpen(true)}>
             Delete
           </button>
+          {editMode ? (
+            <CreateTaskForm onCancel={handleCancel} onSubmitTask={onEditTask} />
+          ) : (
+            <button onClick={handleToggleEdit}>Edit</button>
+          )}
           {isOpen && (
             <Modal
               onClose={closeModal}

@@ -24,6 +24,7 @@ export default function HomePage({ currentTasks, onCreateTask }) {
   function handleCancel() {
     setCreateMode(false);
   }
+
   return (
     <>
       <Header />
@@ -31,7 +32,7 @@ export default function HomePage({ currentTasks, onCreateTask }) {
         <TaskList currentTasks={currentTasks} />
         {createMode ? (
           <CreateTaskForm
-            onCreateTask={(taskData) => {
+            onSubmitTask={(taskData) => {
               onCreateTask(taskData);
               setCreateMode(false);
             }}

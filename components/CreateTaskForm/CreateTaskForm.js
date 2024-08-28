@@ -13,7 +13,7 @@ const StyledTaskForm = styled.form`
   border: 1px solid #000;
 `;
 
-export default function CreateTaskForm({ onCreateTask, onCancel }) {
+export default function CreateTaskForm({ onSubmitTask, onCancel }) {
   const today = new Date().toISOString().split("T")[0];
 
   function handleSubmit(event) {
@@ -21,7 +21,7 @@ export default function CreateTaskForm({ onCreateTask, onCancel }) {
     const formData = new FormData(event.target);
     const taskData = Object.fromEntries(formData);
     onCancel();
-    onCreateTask(taskData);
+    onSubmitTask(taskData);
   }
 
   return (
@@ -33,7 +33,7 @@ export default function CreateTaskForm({ onCreateTask, onCancel }) {
           type="text"
           id="taskName"
           name="title"
-          maxlength="40"
+          maxLength="40"
           placeholder="go grocery shopping"
           required
         />
@@ -42,7 +42,7 @@ export default function CreateTaskForm({ onCreateTask, onCancel }) {
           type="text"
           id="taskDescription"
           name="description"
-          maxlength="500"
+          maxLength="500"
           placeholder="buy 10 apples and 2 gallons of milk"
         ></input>
         <label htmlFor="dueDate">Due Date</label>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GlobalStyle from "../styles";
 import { initialTasks } from "@/lib/data";
 import { uid } from "uid";
@@ -23,6 +23,22 @@ export default function App({ Component, pageProps }) {
     router.push("/");
   }
 
+  function handleEditTask(taskData, id) {
+    const newTaskArray = currentTasks.map((task) =>
+      task.id === id
+        ? {
+            ...task,
+            title: taskData.title,
+            priority: taskData.priority,
+            dueDate: taskData.dueDate,
+            description: taskData.description,
+          }
+        : task
+    );
+    const sortedNewTasks = sortedByDate(newTaskArray);
+    setCurrentTasks(sortedNewTasks);
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -31,6 +47,7 @@ export default function App({ Component, pageProps }) {
         currentTasks={currentTasks}
         onCreateTask={onCreateTask}
         handleConfirm={handleConfirm}
+        handleEditTask={handleEditTask}
       />
     </>
   );
