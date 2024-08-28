@@ -5,6 +5,8 @@ import { StyledPriority } from "@/components/StyledPriority";
 import { StyledTaskFlexWrapper } from "@/components/StyledTaskFlexWrapper";
 import { StyledDate } from "@/components/StyledDate";
 import Link from "next/link";
+import TaskDeleted from "@/components/TaskDelete/TaskDelete";
+import { useState, useEffect } from "react";
 
 const StyledDetailsPage = styled.section`
   border: 1px solid #000000;
@@ -28,10 +30,27 @@ const StyledBackLink = styled(Link)`
   color: white;
 `;
 
-export default function DetailsPage({ sortedDefaultTasks }) {
+export default function DetailsPage({ currentTasks }) {
+  const [tasks, setTasks] = useState(currentTasks);
+  const [deleted, setDeleted] = useState(false);
   const router = useRouter();
   const dynamicId = router.query.id;
-  const currentTask = sortedDefaultTasks.find((task) => task.id === dynamicId);
+
+  const handleDeleteTask = (taskId) => {
+    console.log("Attempting to delete task with id:", taskId);
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    console.log("Updated tasks:", updatedTasks);
+    setTasks(updatedTasks);
+    setDeleted(true);
+  };
+
+  useEffect(() => {
+    if (deleted) {
+      router.push("/");
+    }
+  }, [deleted, router]);
+
+  const currentTask = tasks.find((task) => task.id === dynamicId);
 
   if (!currentTask) {
     return <p>Task not found</p>;
@@ -51,6 +70,7 @@ export default function DetailsPage({ sortedDefaultTasks }) {
         </StyledTaskFlexWrapper>
         <h3>{currentTask.title}</h3>
         <StyledDescription>
+          <TaskDeleted task={currentTask} onDeleteList={handleDeleteTask} />
           <p>{currentTask.description}</p>
           <StyledBackLink href="/">&larr;</StyledBackLink>
         </StyledDescription>

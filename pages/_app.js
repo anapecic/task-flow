@@ -1,8 +1,8 @@
 import GlobalStyle from "../styles";
 import { initialTasks } from "@/lib/data";
+import { useState } from "react";
 
 export default function App({ Component, pageProps }) {
-  const sortedDefaultTasks = sortedByDate(initialTasks);
   function sortedByDate(array) {
     const newArray = array.toSorted((a, b) => {
       const dateA = new Date(a.dueDate);
@@ -12,10 +12,13 @@ export default function App({ Component, pageProps }) {
     return newArray;
   }
 
+  const sortedDefaultTasks = sortedByDate(initialTasks);
+  const [currentTasks, setCurrentTasks] = useState(sortedDefaultTasks);
+
   return (
     <>
       <GlobalStyle />
-      <Component {...pageProps} sortedDefaultTasks={sortedDefaultTasks} />
+      <Component {...pageProps} currentTasks={currentTasks} />
     </>
   );
 }
