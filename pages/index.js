@@ -1,7 +1,13 @@
-export default function HomePage() {
+import Header from "@/components/Header/Header";
+import TaskList from "@/components/TaskList/TaskList";
+
+export default function HomePage({ sortedDefaultTasks }) {
   return (
-    <div>
-      <h1>Hello from Next.js</h1>
-    </div>
+    <>
+      <Header />
+      <main>
+        <TaskList sortedDefaultTasks={sortedDefaultTasks} />
+      </main>
+    </>
   );
 }
