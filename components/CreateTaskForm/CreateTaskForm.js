@@ -25,7 +25,7 @@ export default function CreateTaskForm({ onCreateTask, onCancel }) {
   }
 
   return (
-    <div>
+    <>
       <StyledTaskForm onSubmit={handleSubmit}>
         <h2>Create a new task</h2>
         <label htmlFor="taskName">Task title</label>
@@ -65,6 +65,6 @@ export default function CreateTaskForm({ onCreateTask, onCancel }) {
         <button type="submit">submit</button>
         <button onClick={onCancel}>cancel</button>
       </StyledTaskForm>
-    </div>
+    </>
   );
 }
