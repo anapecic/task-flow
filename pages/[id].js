@@ -30,27 +30,11 @@ const StyledBackLink = styled(Link)`
   color: white;
 `;
 
-export default function DetailsPage({ currentTasks }) {
-  const [tasks, setTasks] = useState(currentTasks);
-  const [deleted, setDeleted] = useState(false);
+export default function DetailsPage({ currentTasks, handleDeleteTask }) {
   const router = useRouter();
   const dynamicId = router.query.id;
 
-  const handleDeleteTask = (taskId) => {
-    console.log("Attempting to delete task with id:", taskId);
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    console.log("Updated tasks:", updatedTasks);
-    setTasks(updatedTasks);
-    setDeleted(true);
-  };
-
-  useEffect(() => {
-    if (deleted) {
-      router.push("/");
-    }
-  }, [deleted, router]);
-
-  const currentTask = tasks.find((task) => task.id === dynamicId);
+  const currentTask = currentTasks?.find((task) => task.id === dynamicId);
 
   if (!currentTask) {
     return <p>Task not found</p>;
@@ -70,8 +54,11 @@ export default function DetailsPage({ currentTasks }) {
         </StyledTaskFlexWrapper>
         <h3>{currentTask.title}</h3>
         <StyledDescription>
-          <TaskDeleted task={currentTask} onDeleteList={handleDeleteTask} />
           <p>{currentTask.description}</p>
+          <TaskDeleted
+            currentTask={currentTask}
+            handleDeleteTask={handleDeleteTask}
+          />
           <StyledBackLink href="/">&larr;</StyledBackLink>
         </StyledDescription>
       </StyledDetailsPage>

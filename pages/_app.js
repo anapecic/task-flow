@@ -1,6 +1,7 @@
 import GlobalStyle from "../styles";
 import { initialTasks } from "@/lib/data";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
   function sortedByDate(array) {
@@ -11,14 +12,23 @@ export default function App({ Component, pageProps }) {
     });
     return newArray;
   }
-
   const sortedDefaultTasks = sortedByDate(initialTasks);
   const [currentTasks, setCurrentTasks] = useState(sortedDefaultTasks);
+  const router = useRouter();
+
+  function handleDeleteTask(id) {
+    setCurrentTasks(currentTasks.filter((task) => task.id !== id));
+    router.push("/");
+  }
 
   return (
     <>
       <GlobalStyle />
-      <Component {...pageProps} currentTasks={currentTasks} />
+      <Component
+        {...pageProps}
+        currentTasks={currentTasks}
+        handleDeleteTask={handleDeleteTask}
+      />
     </>
   );
 }

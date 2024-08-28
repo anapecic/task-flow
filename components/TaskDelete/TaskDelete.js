@@ -49,35 +49,31 @@ const CancelButton = styled.button`
   cursor: pointer;
 `;
 
-const TaskDeleted = ({ task, onDeleteList }) => {
+const TaskDeleted = ({ currentTask, handleDeleteTask }) => {
   const [deleteMode, setDeleteMode] = useState(false);
 
-  const handleDeleteClick = () => {
-    console.log("Натиснуто кнопку видалення для завдання:", task.id);
-    setDeleteMode(true);
-  };
+  function toggleDelete() {
+    setDeleteMode(!deleteMode);
+  }
 
-  const handleConfirmDelete = () => {
-    onDeleteList(task.id); // Виклик функції для видалення завдання
-    setDeleteMode(false); // Сховати підтвердження
-  };
-
-  const handleCancelDelete = () => setDeleteMode(false); // Сховати підтвердження без видалення
+  function onConfirmDelete() {
+    handleDeleteTask(currentTask.id);
+    setDeleteMode(!deleteMode);
+  }
 
   return (
     <Card>
-      <p>{task.title}</p>
-      <DeleteButton onClick={handleDeleteClick}>Delete</DeleteButton>
+      <DeleteButton onClick={toggleDelete}>Delete</DeleteButton>
 
-      {isConfirmingDelete && (
+      {deleteMode ? (
         <ConfirmationBox>
           <p>Are you sure you want to delete this task?</p>
-          <ConfirmButton onClick={handleConfirmDelete}>
-            Yes, Delete
+          <ConfirmButton onClick={() => onConfirmDelete()}>
+            Yes, delete
           </ConfirmButton>
-          <CancelButton onClick={handleCancelDelete}>Cancel</CancelButton>
+          <CancelButton onClick={toggleDelete}>Cancel</CancelButton>
         </ConfirmationBox>
-      )}
+      ) : null}
     </Card>
   );
 };
