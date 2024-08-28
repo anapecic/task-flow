@@ -5,8 +5,8 @@ import { StyledPriority } from "@/components/StyledPriority";
 import { StyledTaskFlexWrapper } from "@/components/StyledTaskFlexWrapper";
 import { StyledDate } from "@/components/StyledDate";
 import Link from "next/link";
-import TaskDeleted from "@/components/TaskDelete/TaskDelete";
-import { useState, useEffect } from "react";
+import Modal from "@/components/Modal/Modal";
+import { useState } from "react";
 
 const StyledDetailsPage = styled.section`
   border: 1px solid #000000;
@@ -30,7 +30,8 @@ const StyledBackLink = styled(Link)`
   color: white;
 `;
 
-export default function DetailsPage({ currentTasks, handleDeleteTask }) {
+export default function DetailsPage({ currentTasks, handleConfirm }) {
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const dynamicId = router.query.id;
 
@@ -38,6 +39,10 @@ export default function DetailsPage({ currentTasks, handleDeleteTask }) {
 
   if (!currentTask) {
     return <p>Task not found</p>;
+  }
+
+  function closeModal() {
+    setIsOpen(false);
   }
 
   const today = new Date();
@@ -50,15 +55,25 @@ export default function DetailsPage({ currentTasks, handleDeleteTask }) {
       <StyledDetailsPage>
         <StyledTaskFlexWrapper>
           <StyledPriority $priority={currentTask.priority} />
-          <StyledDate $dateColor={pastDueDate ? "red" : "black"} />
+          <StyledDate $dateColor={pastDueDate ? "red" : "black"}>
+            {currentTask.dueDate}
+          </StyledDate>
         </StyledTaskFlexWrapper>
         <h3>{currentTask.title}</h3>
         <StyledDescription>
           <p>{currentTask.description}</p>
-          <TaskDeleted
-            currentTask={currentTask}
-            handleDeleteTask={handleDeleteTask}
-          />
+          <button type="button" onClick={() => setIsOpen(true)}>
+            Delete
+          </button>
+          {isOpen && (
+            <Modal
+              onClose={closeModal}
+              onConfirm={(event) => handleConfirm(event, dynamicId)}
+            >
+              <p>Are you sure you want to delete this task?</p>
+            </Modal>
+          )}
+
           <StyledBackLink href="/">&larr;</StyledBackLink>
         </StyledDescription>
       </StyledDetailsPage>

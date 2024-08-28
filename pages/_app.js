@@ -16,7 +16,8 @@ export default function App({ Component, pageProps }) {
   const [currentTasks, setCurrentTasks] = useState(sortedDefaultTasks);
   const router = useRouter();
 
-  function handleDeleteTask(id) {
+  function handleConfirm(event, id) {
+    event.preventDefault();
     setCurrentTasks(currentTasks.filter((task) => task.id !== id));
     router.push("/");
   }
@@ -27,7 +28,7 @@ export default function App({ Component, pageProps }) {
       <Component
         {...pageProps}
         currentTasks={currentTasks}
-        handleDeleteTask={handleDeleteTask}
+        handleConfirm={handleConfirm}
       />
     </>
   );
