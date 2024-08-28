@@ -8,7 +8,6 @@ const StyledCreateButton = styled.button`
   background: grey;
   text-decoration: none;
   color: white;
-  font-size: 20px;
   font-weight: bold;
   width: 70px;
   height: 70px;
@@ -49,7 +48,7 @@ export default function CreateTaskForm({ onCreateTask }) {
     const formData = new FormData(event.target);
     const taskData = Object.fromEntries(formData);
     event.target.reset();
-    setCreateMode((s) => (s = false));
+    setCreateMode(false);
     onCreateTask(taskData);
   }
 
@@ -64,6 +63,7 @@ export default function CreateTaskForm({ onCreateTask }) {
             id="taskName"
             name="title"
             maxlength="40"
+            placeholder="go grocery shopping"
             required
           />
           <label htmlFor="taskDescription">Description</label>
@@ -72,6 +72,7 @@ export default function CreateTaskForm({ onCreateTask }) {
             id="taskDescription"
             name="description"
             maxlength="500"
+            placeholder="buy 10 apples and 2 gallons of milk"
           ></input>
           <label htmlFor="dueDate">Due Date</label>
           <input
@@ -91,13 +92,11 @@ export default function CreateTaskForm({ onCreateTask }) {
             <option value="Low">🟢 Low</option>
           </select>
           <input type="submit" />
-          <button onClick={() => setCreateMode((s) => (s = false))}>
-            Cancel
-          </button>
+          <button onClick={() => setCreateMode(false)}>Cancel</button>
         </StyledTaskForm>
       ) : null}
       {createMode ? null : (
-        <StyledCreateButton onClick={() => setCreateMode((s) => (s = true))}>
+        <StyledCreateButton onClick={() => setCreateMode(true)}>
           +
         </StyledCreateButton>
       )}
