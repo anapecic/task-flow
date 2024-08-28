@@ -91,6 +91,9 @@ export default function CreateTaskForm({ onCreateTask }) {
             <option value="Low">🟢 Low</option>
           </select>
           <input type="submit" />
+          <button onClick={() => setCreateMode((s) => (s = false))}>
+            Cancel
+          </button>
         </StyledTaskForm>
       ) : null}
       {createMode ? null : (
