@@ -1,20 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
-import { useEffect } from "react";
-
-const StyledCreateButton = styled.button`
-  border: 1px solid black;
-  border-radius: 50%;
-  background: grey;
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  width: 70px;
-  height: 70px;
-  position: fixed;
-  bottom: 50px;
-  right: 50px;
-`;
 
 const StyledTaskForm = styled.form`
   position: absolute;
@@ -29,77 +13,58 @@ const StyledTaskForm = styled.form`
   border: 1px solid #000;
 `;
 
-export default function CreateTaskForm({ onCreateTask }) {
-  const [createMode, setCreateMode] = useState(false);
-  const [today, setToday] = useState("");
-
-  useEffect(() => {
-    const currentDate = new Date();
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const year = currentDate.getFullYear();
-
-    const formattedDate = `${year}-${month}-${day}`;
-    setToday(formattedDate);
-  }, []);
+export default function CreateTaskForm({ onCreateTask, onCancel }) {
+  const today = new Date().toISOString().split("T")[0];
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const taskData = Object.fromEntries(formData);
-    event.target.reset();
-    setCreateMode(false);
+    onCancel();
     onCreateTask(taskData);
   }
 
   return (
     <div>
-      {createMode ? (
-        <StyledTaskForm onSubmit={handleSubmit}>
-          <h3>Create a new task</h3>
-          <label htmlFor="taskName">Task title</label>
-          <input
-            type="text"
-            id="taskName"
-            name="title"
-            maxlength="40"
-            placeholder="go grocery shopping"
-            required
-          />
-          <label htmlFor="taskDescription">Description</label>
-          <input
-            type="text"
-            id="taskDescription"
-            name="description"
-            maxlength="500"
-            placeholder="buy 10 apples and 2 gallons of milk"
-          ></input>
-          <label htmlFor="dueDate">Due Date</label>
-          <input
-            type="date"
-            id="dueDate"
-            name="dueDate"
-            defaultValue={today}
-            required
-          />
-          <label htmlFor="priority">Priority</label>
-          <select defaultValue="" name="priority" required>
-            <option disabled value="">
-              --Choose a priority--
-            </option>
-            <option value="High">🔴 High</option>
-            <option value="Medium">🟡 Medium</option>
-            <option value="Low">🟢 Low</option>
-          </select>
-          <input type="submit" />
-          <button onClick={() => setCreateMode(false)}>Cancel</button>
-        </StyledTaskForm>
-      ) : null}
-      {createMode ? null : (
-        <StyledCreateButton onClick={() => setCreateMode(true)}>
-          +
-        </StyledCreateButton>
-      )}
+      <StyledTaskForm onSubmit={handleSubmit}>
+        <h2>Create a new task</h2>
+        <label htmlFor="taskName">Task title</label>
+        <input
+          type="text"
+          id="taskName"
+          name="title"
+          maxlength="40"
+          placeholder="go grocery shopping"
+          required
+        />
+        <label htmlFor="taskDescription">Description</label>
+        <input
+          type="text"
+          id="taskDescription"
+          name="description"
+          maxlength="500"
+          placeholder="buy 10 apples and 2 gallons of milk"
+        ></input>
+        <label htmlFor="dueDate">Due Date</label>
+        <input
+          type="date"
+          id="dueDate"
+          name="dueDate"
+          defaultValue={today}
+          required
+        />
+        <label htmlFor="priority">Priority</label>
+        <select defaultValue="" name="priority" required>
+          <option disabled value="">
+            --Choose a priority--
+          </option>
+          <option value="High">🔴 High</option>
+          <option value="Medium">🟡 Medium</option>
+          <option value="Low">🟢 Low</option>
+        </select>
+        <button type="submit">submit</button>
+        <button onClick={onCancel}>cancel</button>
+      </StyledTaskForm>
     </div>
   );
 }

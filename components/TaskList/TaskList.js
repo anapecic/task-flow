@@ -8,7 +8,7 @@ const StyledList = styled.ul`
 export default function TaskList({ currentTasks }) {
   return (
     <>
-      <h2>Tasks</h2>
+      <h1>Tasks</h1>
       <StyledList>
         {currentTasks.map((task) => (
           <Task key={task.id} task={task} />
