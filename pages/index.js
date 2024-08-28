@@ -23,6 +23,8 @@ export default function HomePage({
   onCreateTask,
   onSetCompleted,
   completedTasks,
+  sortMode,
+  onSetFilter,
 }) {
   const [createMode, setCreateMode] = useState(false);
 
@@ -34,6 +36,7 @@ export default function HomePage({
     <>
       <Header />
       <main>
+        <Filter sortMode={sortMode} onSetFilter={onSetFilter} />
         <TaskList
           tasks={currentTasks}
           onSetCompleted={onSetCompleted}
@@ -61,5 +64,15 @@ export default function HomePage({
         )}
       </main>
     </>
+  );
+}
+
+function Filter({ sortMode, onSetFilter }) {
+  return (
+    <select onChange={(event) => onSetFilter(event.target.value)}>
+      <option value="date">Due Date</option>
+      <option value="prioAscending">Prio ⬆️</option>
+      <option value="prioDescending">Prio ⬇️</option>
+    </select>
   );
 }
