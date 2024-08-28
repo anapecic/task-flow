@@ -58,10 +58,21 @@ export default function CreateTaskForm({ onCreateTask }) {
       {createMode ? (
         <StyledTaskForm onSubmit={handleSubmit}>
           <h3>Create a new task</h3>
-          <label htmlFor="taskName">Task</label>
-          <input type="text" id="taskName" name="title" required />
+          <label htmlFor="taskName">Task title</label>
+          <input
+            type="text"
+            id="taskName"
+            name="title"
+            maxlength="40"
+            required
+          />
           <label htmlFor="taskDescription">Description</label>
-          <input type="text" id="taskDescription" name="description"></input>
+          <input
+            type="text"
+            id="taskDescription"
+            name="description"
+            maxlength="500"
+          ></input>
           <label htmlFor="dueDate">Due Date</label>
           <input
             type="date"
@@ -70,6 +81,7 @@ export default function CreateTaskForm({ onCreateTask }) {
             defaultValue={today}
             required
           />
+          <label htmlFor="priority">Priority</label>
           <select defaultValue="" name="priority" required>
             <option disabled value="">
               --Choose a priority--
