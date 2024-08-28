@@ -1,10 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const Card = styled.div`
+const TaskDeleteCard = styled.div`
   padding: 10px;
-  border: 1px solid #ddd;
-  margin: 10px;
+  margin-bottom: 10px;
   position: relative;
 `;
 
@@ -17,11 +16,11 @@ const DeleteButton = styled.button`
 `;
 
 const ConfirmationBox = styled.div`
+  width: 100%;
   position: absolute;
-  top: 0;
+  top: -31px;
   left: 0;
-  right: 0;
-  bottom: 0;
+  padding: 0 10px;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   display: flex;
@@ -62,7 +61,7 @@ const TaskDeleted = ({ currentTask, handleDeleteTask }) => {
   }
 
   return (
-    <Card>
+    <TaskDeleteCard>
       <DeleteButton onClick={toggleDelete}>Delete</DeleteButton>
 
       {deleteMode ? (
@@ -74,7 +73,7 @@ const TaskDeleted = ({ currentTask, handleDeleteTask }) => {
           <CancelButton onClick={toggleDelete}>Cancel</CancelButton>
         </ConfirmationBox>
       ) : null}
-    </Card>
+    </TaskDeleteCard>
   );
 };
 
