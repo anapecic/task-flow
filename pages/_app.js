@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GlobalStyle from "../styles";
 import { initialTasks } from "@/lib/data";
 import { uid } from "uid";
 import sortedByDate from "@/utils/sortedByDate";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
   const sortedDefaultTasks = sortedByDate(initialTasks);
@@ -14,6 +15,13 @@ export default function App({ Component, pageProps }) {
     const updatedTasks = sortedByDate([...currentTasks, newTaskObject]);
     setCurrentTasks(updatedTasks);
   }
+  const router = useRouter();
+
+  function handleConfirm(event, id) {
+    event.preventDefault();
+    setCurrentTasks(currentTasks.filter((task) => task.id !== id));
+    router.push("/");
+  }
 
   return (
     <>
@@ -21,6 +29,7 @@ export default function App({ Component, pageProps }) {
       <Component
         {...pageProps}
         currentTasks={currentTasks}
+        handleConfirm={handleConfirm}
         onCreateTask={onCreateTask}
       />
     </>

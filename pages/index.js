@@ -24,7 +24,6 @@ export default function HomePage({ currentTasks, onCreateTask }) {
   function handleCancel() {
     setCreateMode(false);
   }
-
   return (
     <>
       <Header />
