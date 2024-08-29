@@ -33,7 +33,7 @@ export default function CreateTaskForm({ onCreateTask, onCancel }) {
           type="text"
           id="taskName"
           name="title"
-          maxlength="40"
+          maxLength="40"
           placeholder="go grocery shopping"
           required
         />
@@ -42,7 +42,7 @@ export default function CreateTaskForm({ onCreateTask, onCancel }) {
           type="text"
           id="taskDescription"
           name="description"
-          maxlength="500"
+          maxLength="500"
           placeholder="buy 10 apples and 2 gallons of milk"
         ></input>
         <label htmlFor="dueDate">Due Date</label>
@@ -52,6 +52,7 @@ export default function CreateTaskForm({ onCreateTask, onCancel }) {
           name="dueDate"
           defaultValue={today}
           required
+          min={today}
         />
         <label htmlFor="priority">Priority</label>
         <select defaultValue="" name="priority" required>
