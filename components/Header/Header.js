@@ -1,7 +1,3 @@
 export default function Header() {
-  return (
-    <header>
-      <h1>Task Flow</h1>
-    </header>
-  );
+  return <header>Task Flow</header>;
 }

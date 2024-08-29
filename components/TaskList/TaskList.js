@@ -5,12 +5,12 @@ const StyledList = styled.ul`
   list-style-type: none;
 `;
 
-export default function TaskList({ sortedDefaultTasks }) {
+export default function TaskList({ currentTasks }) {
   return (
     <>
-      <h2>Tasks</h2>
+      <h1>Tasks</h1>
       <StyledList>
-        {sortedDefaultTasks.map((task) => (
+        {currentTasks.map((task) => (
           <Task key={task.id} task={task} />
         ))}
       </StyledList>

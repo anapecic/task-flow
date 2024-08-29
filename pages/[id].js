@@ -28,10 +28,10 @@ const StyledBackLink = styled(Link)`
   color: white;
 `;
 
-export default function DetailsPage({ sortedDefaultTasks }) {
+export default function DetailsPage({ currentTasks }) {
   const router = useRouter();
   const dynamicId = router.query.id;
-  const currentTask = sortedDefaultTasks.find((task) => task.id === dynamicId);
+  const currentTask = currentTasks?.find((task) => task.id === dynamicId);
 
   if (!currentTask) {
     return <p>Task not found</p>;
