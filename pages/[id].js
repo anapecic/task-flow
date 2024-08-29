@@ -34,7 +34,6 @@ export default function DetailsPage({ currentTasks, handleConfirm }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const dynamicId = router.query.id;
-
   const currentTask = currentTasks?.find((task) => task.id === dynamicId);
 
   if (!currentTask) {
