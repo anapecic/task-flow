@@ -1,6 +1,5 @@
 import GlobalStyle from "../styles";
 import { initialTasks } from "@/lib/data";
-import { TasksProvider } from "@/lib/tasksContext";
 
 export default function App({ Component, pageProps }) {
   const sortedDefaultTasks = sortedByDate(initialTasks);
@@ -16,10 +15,8 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <TasksProvider>
-        <GlobalStyle />
-        <Component {...pageProps} sortedDefaultTasks={sortedDefaultTasks} />
-      </TasksProvider>
+      <GlobalStyle />
+      <Component {...pageProps} sortedDefaultTasks={sortedDefaultTasks} />
     </>
   );
 }
