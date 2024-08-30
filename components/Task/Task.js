@@ -1,5 +1,5 @@
-// import { useState, useEffect } from "react";
-// import { useTasks } from "@/lib/tasksContext";
+import { useState, useEffect } from "react";
+import { useTasks } from "@/lib/tasksContext";
 import styled from "styled-components";
 import Link from "next/link";
 import { StyledPriority } from "../StyledPriority";
@@ -23,30 +23,30 @@ const StyledTask = styled.li`
 
 const StyledTaskTitle = styled.h3``;
 
-export default function Task({ task, toggleIsCompleted }) {
+export default function Task({ task }) {
   const today = new Date();
   const dueDate = new Date(task?.dueDate);
   const pastDueDate = today >= dueDate;
-  // const { tasks, updateTask } = useTasks();
+  const { tasks, updateTask } = useTasks();
 
-  // const [isCompleted, setIsCompleted] = useState(task.isCompleted);
+  const [isCompleted, setIsCompleted] = useState(task.isCompleted);
 
-  // useEffect(() => {
-  //   const updatedTask = tasks.find((t) => t.id === task.id);
-  //   if (updatedTask) {
-  //     setIsCompleted(updatedTask.isCompleted);
-  //   }
-  // }, [tasks, task.id]);
+  useEffect(() => {
+    const updatedTask = tasks.find((t) => t.id === task.id);
+    if (updatedTask) {
+      setIsCompleted(updatedTask.isCompleted);
+    }
+  }, [tasks, task.id]);
 
-  // const handleMarkAsCompleted = (e) => {
-  //   e.preventDefault();
-  //   updateTask(task.id);
-  //   setIsCompleted(!isCompleted);
-  // };
+  const handleMarkAsCompleted = (e) => {
+    e.preventDefault();
+    updateTask(task.id);
+    setIsCompleted(!isCompleted);
+  };
 
   return (
     <StyledLink href={`/${task.id}`}>
-      <StyledTask isCompleted={task.isCompleted}>
+      <StyledTask isCompleted={isCompleted}>
         <StyledTaskWrapper>
           <StyledTaskFlexWrapper>
             <StyledPriority $priority={task.priority} />
@@ -55,11 +55,8 @@ export default function Task({ task, toggleIsCompleted }) {
             </StyledDate>
           </StyledTaskFlexWrapper>
           <StyledMarkCompleted
-            checked={task.isCompleted}
-            onClick={(e) => {
-              e.preventDefault();
-              toggleIsCompleted(task.id);
-            }}
+            checked={isCompleted}
+            onClick={handleMarkAsCompleted}
           />
         </StyledTaskWrapper>
         <StyledTaskTitle>{task.title}</StyledTaskTitle>

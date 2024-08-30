@@ -1,4 +1,4 @@
-// pages/[id].js
+import { useTasks } from "@/lib/tasksContext";
 import { useRouter } from "next/router";
 import Header from "@/components/Header/Header";
 import styled from "styled-components";
@@ -8,10 +8,7 @@ import { StyledTaskFlexWrapper } from "@/components/StyledTaskFlexWrapper";
 import { StyledDate } from "@/components/StyledDate";
 import Link from "next/link";
 import { StyledMarkCompleted } from "@/components/StyledMarkCompleted";
-import { initialTasks } from "@/lib/data";
-import { useState } from "react";
 
-// Стили
 const StyledDetailsPage = styled.section`
   border: 1px solid #000000;
   padding: 1rem;
@@ -36,47 +33,27 @@ const StyledBackLink = styled(Link)`
   color: white;
 `;
 
-// Компонент деталізації завдання
-export default function TaskDetailsPage() {
+export default function DetailsPage({ sortedDefaultTasks }) {
   const router = useRouter();
-  const { id } = router.query;
+  const { tasks, updateTask } = useTasks();
+  const dynamicId = router.query.id;
 
-  // Ініціалізація задач з `initialTasks`
-  const [tasks, setTasks] = useState(initialTasks);
-
-  // Функція для перемикання статусу виконання
-  const handleToggleIsCompleted = (taskId) => {
-    console.log(`Toggle completed status for task with ID: ${taskId}`);
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
-      )
-    );
-  };
-
-  // Перевірка, чи `id` визначено перед рендерингом
-  if (!id) {
-    return <p>Loading...</p>;
-  }
-
-  const currentTask = tasks.find((task) => task.id === id);
+  const currentTask =
+    tasks.find((task) => task.id === dynamicId) ||
+    sortedDefaultTasks.find((task) => task.id === dynamicId);
 
   if (!currentTask) {
     return <p>Task not found</p>;
   }
 
   const today = new Date();
-  const dueDate = new Date(currentTask.dueDate);
+  const dueDate = new Date(currentTask?.dueDate);
   const pastDueDate = today >= dueDate;
 
   const isCompleted = currentTask.isCompleted;
 
   const handleMarkAsCompleted = () => {
-    if (typeof handleToggleIsCompleted === "function") {
-      handleToggleIsCompleted(currentTask.id);
-    } else {
-      console.error("handleToggleIsCompleted не є функцією");
-    }
+    updateTask(currentTask.id);
   };
 
   return (
@@ -86,12 +63,10 @@ export default function TaskDetailsPage() {
         <StyledTaskWrapper>
           <StyledTaskFlexWrapper>
             <StyledPriority $priority={currentTask.priority} />
-            <StyledDate $dateColor={pastDueDate ? "red" : "black"}>
-              {currentTask.dueDate}
-            </StyledDate>
+            <StyledDate $dateColor={pastDueDate ? "red" : "black"} />
           </StyledTaskFlexWrapper>
           <StyledMarkCompleted
-            checked={isCompleted}
+            checked={currentTask.isCompleted}
             onClick={handleMarkAsCompleted}
           />
         </StyledTaskWrapper>
