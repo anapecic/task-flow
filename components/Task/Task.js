@@ -6,7 +6,7 @@ import { StyledPriority } from "../StyledPriority";
 import { StyledTaskWrapper } from "../StyledTaskWrapper";
 import { StyledTaskFlexWrapper } from "../StyledTaskFlexWrapper";
 import { StyledDate } from "../StyledDate";
-import { StyleMark } from "../StyleMark";
+import { StyledMarkCompleted } from "../StyledMarkCompleted";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -19,7 +19,6 @@ const StyledTask = styled.li`
   margin: 0.5rem;
   background-color: ${(props) =>
     props.isCompleted ? "rgba(71, 70, 70, 0.267)" : "transparent"};
-  opacity: ${(props) => (props.isCompleted ? "0.4" : "1")};
 `;
 
 const StyledTaskTitle = styled.h3``;
@@ -55,7 +54,10 @@ export default function Task({ task }) {
               {task.dueDate}
             </StyledDate>
           </StyledTaskFlexWrapper>
-          <StyleMark checked={isCompleted} onClick={handleMarkAsCompleted} />
+          <StyledMarkCompleted
+            checked={isCompleted}
+            onClick={handleMarkAsCompleted}
+          />
         </StyledTaskWrapper>
         <StyledTaskTitle>{task.title}</StyledTaskTitle>
       </StyledTask>

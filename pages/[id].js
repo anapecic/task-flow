@@ -7,7 +7,7 @@ import { StyledTaskWrapper } from "@/components/StyledTaskWrapper";
 import { StyledTaskFlexWrapper } from "@/components/StyledTaskFlexWrapper";
 import { StyledDate } from "@/components/StyledDate";
 import Link from "next/link";
-import { StyleMark } from "@/components/StyleMark";
+import { StyledMarkCompleted } from "@/components/StyledMarkCompleted";
 
 const StyledDetailsPage = styled.section`
   border: 1px solid #000000;
@@ -15,7 +15,6 @@ const StyledDetailsPage = styled.section`
   margin: 0.5rem;
   background-color: ${(props) =>
     props.isCompleted ? "rgba(71, 70, 70, 0.267)" : "transparent"};
-  opacity: ${(props) => (props.isCompleted ? "0.4" : "1")};
 `;
 
 const StyledDescription = styled.aside`
@@ -66,7 +65,7 @@ export default function DetailsPage({ sortedDefaultTasks }) {
             <StyledPriority $priority={currentTask.priority} />
             <StyledDate $dateColor={pastDueDate ? "red" : "black"} />
           </StyledTaskFlexWrapper>
-          <StyleMark
+          <StyledMarkCompleted
             checked={currentTask.isCompleted}
             onClick={handleMarkAsCompleted}
           />
