@@ -18,7 +18,14 @@ export default function UpdateTaskForm({ task, onUpdateTask, onCancel }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
+
+    const formElement = event.target;
+    if (!(formElement instanceof HTMLFormElement)) {
+      console.error("Form element not found");
+      return;
+    }
+
+    const formData = new FormData(formElement);
     const updatedTaskData = Object.fromEntries(formData);
 
     const newErrors = {};
@@ -46,6 +53,7 @@ export default function UpdateTaskForm({ task, onUpdateTask, onCancel }) {
         defaultValue={task.title}
         required
       />
+      {errors.title && <StyledError>{errors.title}</StyledError>}
 
       <label htmlFor="taskDescription">Description</label>
       <textarea
@@ -63,6 +71,7 @@ export default function UpdateTaskForm({ task, onUpdateTask, onCancel }) {
         defaultValue={task.dueDate}
         required
       />
+      {errors.dueDate && <StyledError>{errors.dueDate}</StyledError>}
 
       <label htmlFor="priority">Priority</label>
       <select name="priority" defaultValue={task.priority} required>
@@ -73,6 +82,7 @@ export default function UpdateTaskForm({ task, onUpdateTask, onCancel }) {
         <option value="Medium">🟡 Medium</option>
         <option value="Low">🟢 Low</option>
       </select>
+      {errors.priority && <StyledError>{errors.priority}</StyledError>}
 
       <button type="submit">Save</button>
       <button type="button" onClick={onCancel}>

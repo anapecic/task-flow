@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Header from "@/components/Header/Header";
 import styled from "styled-components";
@@ -6,7 +7,6 @@ import { StyledTaskFlexWrapper } from "@/components/StyledTaskFlexWrapper";
 import { StyledDate } from "@/components/StyledDate";
 import Link from "next/link";
 import UpdateTaskForm from "@/components/UpdateTaskForm/UpdateTaskForm";
-import { useState } from "react";
 
 const StyledDetailsPage = styled.section`
   border: 1px solid #000000;
@@ -42,12 +42,28 @@ const Button = styled.button`
 
 export default function DetailsPage({ sortedDefaultTasks }) {
   const router = useRouter();
+  const [tasks, setTasks] = useState(sortedDefaultTasks); // Initialize tasks state
   const [isOpen, setIsOpen] = useState(false);
   const dynamicId = router.query.id;
-  const currentTask = sortedDefaultTasks.find((task) => task.id === dynamicId);
+
+  // Find the current task in the tasks state
+  const currentTask = tasks.find((task) => task.id === dynamicId);
 
   if (!currentTask) {
     return <p>Task not found</p>;
+  }
+
+  function handleUpdateTask(updatedTaskData) {
+    console.log("Updated Task:", updatedTaskData);
+
+    // Update the tasks state immutably
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === updatedTaskData.id ? updatedTaskData : task
+      )
+    );
+
+    setIsOpen(false); // Close the update form after saving
   }
 
   function closeUpdateTaskForm() {
@@ -75,10 +91,7 @@ export default function DetailsPage({ sortedDefaultTasks }) {
           {isOpen && (
             <UpdateTaskForm
               task={currentTask}
-              onUpdateTask={(updatedTaskData) => {
-                console.log(updatedTaskData);
-                closeUpdateTaskForm();
-              }}
+              onUpdateTask={handleUpdateTask} // Pass the updated task data to handleUpdateTask
               onCancel={closeUpdateTaskForm}
             />
           )}
