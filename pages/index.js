@@ -4,6 +4,11 @@ import CreateTaskForm from "@/components/CreateTaskForm/CreateTaskForm";
 import styled from "styled-components";
 import { useState } from "react";
 
+const StyledMain = styled.main`
+  position: relative;
+  padding: 1rem;
+`;
+
 const StyledCreateButton = styled.button`
   border: 1px solid black;
   border-radius: 50%;
@@ -16,6 +21,22 @@ const StyledCreateButton = styled.button`
   position: fixed;
   bottom: 50px;
   right: 50px;
+`;
+
+const StyledNav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const StyledPrio = styled.div`
+  border: 1px solid black;
+  padding: 0;
+  border-radius: 5px;
+`;
+
+const StyledP = styled.p`
+  margin: 0;
 `;
 
 export default function HomePage({
@@ -34,8 +55,8 @@ export default function HomePage({
   return (
     <>
       <Header />
-      <main>
-        <nav>
+      <StyledMain>
+        <StyledNav>
           <select
             value={sortMode}
             onChange={(event) => handleSort(event.target.value)}
@@ -44,18 +65,20 @@ export default function HomePage({
             <option value="prioAscending">Prio &uarr;</option>
             <option value="prioDescending">Prio &darr;</option>
           </select>
-          <div>
-            {sortMode === "prioAscending" ? (
-              <p>
-                <span onClick={setDefaultSort}>❌ </span>Prio &uarr;
-              </p>
-            ) : null || sortMode === "prioDescending" ? (
-              <p>
-                <span onClick={setDefaultSort}>❌ </span>Prio &darr;
-              </p>
-            ) : null}
-          </div>
-        </nav>
+          {sortMode === "date" ? null : (
+            <StyledPrio>
+              {sortMode === "prioAscending" ? (
+                <StyledP>
+                  <span onClick={setDefaultSort}>&#10005; </span>Prio &uarr;
+                </StyledP>
+              ) : null || sortMode === "prioDescending" ? (
+                <StyledP>
+                  <span onClick={setDefaultSort}>&#10005; </span>Prio &darr;
+                </StyledP>
+              ) : null}
+            </StyledPrio>
+          )}
+        </StyledNav>
         <TaskList currentTasks={currentTasks} />
         {createMode ? (
           <CreateTaskForm
@@ -70,7 +93,7 @@ export default function HomePage({
             +
           </StyledCreateButton>
         )}
-      </main>
+      </StyledMain>
     </>
   );
 }
