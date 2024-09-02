@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const StyledMarkCompleted = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background-color: ${(props) => (props.checked ? "#008000" : "")};
+  background-color: ${(props) => (props.checked ? "#008000" : "transparent")};
   border: 2px solid ${(props) => (props.checked ? "#008000" : "#ccc")};
   position: relative;
   cursor: pointer;
@@ -14,7 +14,7 @@ export const StyledMarkCompleted = styled.div`
 
   &:after {
     content: "${(props) => (props.checked ? "✔" : "")}";
-    font-size: 16px;
+    font-size: 34px;
     color: ${(props) => (props.checked ? "#fff" : "transparent")};
     position: absolute;
   }

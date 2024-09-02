@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledTaskWrapper = styled.div`
+export const StyledTaskWrapperTop = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;

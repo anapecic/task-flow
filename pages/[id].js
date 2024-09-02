@@ -1,12 +1,12 @@
-import { useTasks } from "@/lib/tasksContext";
 import { useRouter } from "next/router";
 import Header from "@/components/Header/Header";
 import styled from "styled-components";
 import { StyledPriority } from "@/components/StyledPriority";
-import { StyledTaskWrapper } from "@/components/StyledTaskWrapper";
 import { StyledTaskFlexWrapper } from "@/components/StyledTaskFlexWrapper";
 import { StyledDate } from "@/components/StyledDate";
 import Link from "next/link";
+import Modal from "@/components/Modal/Modal";
+import { useState } from "react";
 import { StyledMarkCompleted } from "@/components/StyledMarkCompleted";
 
 const StyledDetailsPage = styled.section`
@@ -33,47 +33,57 @@ const StyledBackLink = styled(Link)`
   color: white;
 `;
 
-export default function DetailsPage({ sortedDefaultTasks }) {
+export default function DetailsPage({
+  currentTasks,
+  handleConfirm,
+  // toggleIsCompleted,
+}) {
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const { tasks, updateTask } = useTasks();
   const dynamicId = router.query.id;
-
-  const currentTask =
-    tasks.find((task) => task.id === dynamicId) ||
-    sortedDefaultTasks.find((task) => task.id === dynamicId);
+  const currentTask = currentTasks?.find((task) => task.id === dynamicId);
 
   if (!currentTask) {
     return <p>Task not found</p>;
+  }
+
+  function closeModal() {
+    setIsOpen(false);
   }
 
   const today = new Date();
   const dueDate = new Date(currentTask?.dueDate);
   const pastDueDate = today >= dueDate;
 
-  const isCompleted = currentTask.isCompleted;
-
-  const handleMarkAsCompleted = () => {
-    updateTask(currentTask.id);
-  };
-
   return (
     <>
       <Header />
-      <StyledDetailsPage isCompleted={isCompleted}>
-        <StyledTaskWrapper>
-          <StyledTaskFlexWrapper>
-            <StyledPriority $priority={currentTask.priority} />
-            <StyledDate $dateColor={pastDueDate ? "red" : "black"} />
-          </StyledTaskFlexWrapper>
-          <StyledMarkCompleted
-            checked={currentTask.isCompleted}
-            onClick={handleMarkAsCompleted}
-          />
-        </StyledTaskWrapper>
-
+      <StyledDetailsPage isCompleted={currentTask.isCompleted}>
+        <StyledTaskFlexWrapper>
+          <StyledPriority $priority={currentTask.priority} />
+          <StyledDate $dateColor={pastDueDate ? "red" : "black"}>
+            {currentTask.dueDate}
+          </StyledDate>
+        </StyledTaskFlexWrapper>
+        {/* <StyledMarkCompleted
+          checked={currentTask.isCompleted}
+          onClick={() => toggleIsCompleted(currentTask.id)} // Виправлено
+        ></StyledMarkCompleted> */}
         <h3>{currentTask.title}</h3>
         <StyledDescription>
           <p>{currentTask.description}</p>
+          <button type="button" onClick={() => setIsOpen(true)}>
+            Delete
+          </button>
+          {isOpen && (
+            <Modal
+              onClose={closeModal}
+              onConfirm={(event) => handleConfirm(event, dynamicId)}
+            >
+              <p>Are you sure you want to delete this task?</p>
+            </Modal>
+          )}
+
           <StyledBackLink href="/">&larr;</StyledBackLink>
         </StyledDescription>
       </StyledDetailsPage>
