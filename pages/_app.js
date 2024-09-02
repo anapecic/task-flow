@@ -40,9 +40,16 @@ export default function App({ Component, pageProps }) {
   }
 
   function handleSetCompleted(id) {
-    const newTask = currentTasks.find((task) => task.id === id);
-    setCompletedTasks([...completedTasks, newTask]);
-    handleConfirmDelete(id);
+    let newTask = currentTasks.find((task) => task.id === id);
+    if (newTask) {
+      setCompletedTasks([...completedTasks, newTask]);
+      handleConfirmDelete(id);
+    } else if (!newTask) {
+      newTask = completedTasks.find((task) => task.id === id);
+      const newCurrentTasks = sortByFilter("date", [...currentTasks, newTask]);
+      setCurrentTasks(newCurrentTasks);
+      setCompletedTasks(completedTasks.filter((task) => task.id !== id));
+    }
   }
 
   function handleSetFilter(filter) {

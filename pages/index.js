@@ -47,6 +47,7 @@ export default function HomePage({
         <TaskList
           tasks={completedTasks}
           listTitle="Completed Tasks"
+          onSetCompleted={onSetCompleted}
           completedStyle={true}
         />
         {createMode ? (

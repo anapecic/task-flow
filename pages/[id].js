@@ -35,12 +35,16 @@ export default function DetailsPage({
   currentTasks,
   handleConfirmDelete,
   handleEditTask,
+  completedTasks,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const router = useRouter();
   const dynamicId = router.query.id;
-  const currentTask = currentTasks?.find((task) => task.id === dynamicId);
+  let currentTask = currentTasks?.find((task) => task.id === dynamicId);
+  if (!currentTask) {
+    currentTask = completedTasks?.find((task) => task.id === dynamicId);
+  }
 
   if (!currentTask) {
     return <p>Task not found</p>;
