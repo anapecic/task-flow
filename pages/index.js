@@ -18,16 +18,44 @@ const StyledCreateButton = styled.button`
   right: 50px;
 `;
 
-export default function HomePage({ currentTasks, onCreateTask }) {
+export default function HomePage({
+  currentTasks,
+  onCreateTask,
+  sortMode,
+  handleSort,
+  setDefaultSort,
+}) {
   const [createMode, setCreateMode] = useState(false);
 
   function handleCancel() {
     setCreateMode(false);
   }
+
   return (
     <>
       <Header />
       <main>
+        <nav>
+          <select
+            value={sortMode}
+            onChange={(event) => handleSort(event.target.value)}
+          >
+            <option value="date">Due Date 📅</option>
+            <option value="prioAscending">Prio &uarr;</option>
+            <option value="prioDescending">Prio &darr;</option>
+          </select>
+          <div>
+            {sortMode === "prioAscending" ? (
+              <p>
+                <span onClick={setDefaultSort}>❌ </span>Prio &uarr;
+              </p>
+            ) : null || sortMode === "prioDescending" ? (
+              <p>
+                <span onClick={setDefaultSort}>❌ </span>Prio &darr;
+              </p>
+            ) : null}
+          </div>
+        </nav>
         <TaskList currentTasks={currentTasks} />
         {createMode ? (
           <CreateTaskForm

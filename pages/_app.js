@@ -27,6 +27,18 @@ export default function App({ Component, pageProps }) {
     router.push("/");
   }
 
+  function handleSort(sortFilter) {
+    setSortMode(sortFilter);
+    const sortedByFilter = sortByFilter(sortFilter, currentTasks);
+    setCurrentTasks(sortedByFilter);
+  }
+
+  function setDefaultSort() {
+    setSortMode("date");
+    const sortedByFilter = sortByFilter("date", currentTasks);
+    setCurrentTasks(sortedByFilter);
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -35,6 +47,9 @@ export default function App({ Component, pageProps }) {
         currentTasks={currentTasks}
         handleDelete={handleDelete}
         onCreateTask={onCreateTask}
+        sortMode={sortMode}
+        handleSort={handleSort}
+        setDefaultSort={setDefaultSort}
       />
     </>
   );
