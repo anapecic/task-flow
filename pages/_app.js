@@ -57,6 +57,7 @@ export default function App({ Component, pageProps }) {
         handleConfirm={handleConfirm}
         onCreateTask={onCreateTask}
         toggleIsCompleted={toggleIsCompleted}
+        isCompletedView={false}
       />
     </>
   );

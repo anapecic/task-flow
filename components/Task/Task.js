@@ -4,7 +4,7 @@ import { StyledPriority } from "../StyledPriority";
 import { StyledTaskFlexWrapper } from "../StyledTaskFlexWrapper";
 import { StyledDate } from "../StyledDate";
 import { StyledMarkCompleted } from "../StyledMarkCompleted";
-import { StyledTaskWrapperTop } from "../StyledTaskWrapper";
+import { StyledTaskWrapperTop } from "../StyledTaskWrapperTop";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -19,16 +19,16 @@ const StyledTask = styled.li`
     props.isCompleted ? "rgba(71, 70, 70, 0.267)" : "transparent"};
 `;
 
-const StyledTaskTitle = styled.h3``;
+const StyledTaskTitle = styled.h2``; // Можливо треба змінити
 
-export default function Task({ task, toggleIsCompleted }) {
+export default function Task({ task, toggleIsCompleted, isCompletedView }) {
   const today = new Date();
   const dueDate = new Date(task?.dueDate);
   const pastDueDate = today >= dueDate;
 
   const handleMarkAsCompleted = (event) => {
     event.preventDefault();
-    console.log("Task ID to toggles:", task.id);
+
     toggleIsCompleted(task.id);
   };
 
@@ -43,8 +43,8 @@ export default function Task({ task, toggleIsCompleted }) {
             </StyledDate>
           </StyledTaskFlexWrapper>
           <StyledMarkCompleted
-            checked={task.isCompleted}
             onClick={handleMarkAsCompleted}
+            isCompletedView={isCompletedView}
           />
         </StyledTaskWrapperTop>
 

@@ -34,16 +34,17 @@ export default function HomePage({
       <Header />
       <main>
         <TaskList
-          title="Tasks" // Заголовок для поточних завдань
+          title="Tasks"
           tasks={currentTasks}
           toggleIsCompleted={toggleIsCompleted}
+          isCompletedView={false}
         />
         <TaskList
-          title="Completed Tasks" // Заголовок для завершених завдань
+          title="Completed Tasks"
           tasks={completedTasks}
-          toggleIsCompleted={toggleIsCompleted} //Hier muss ein Prop übergeben werden, der die Completed Tasks anders rendert als die Current Tasks.
+          toggleIsCompleted={toggleIsCompleted}
+          isCompletedView={true}
         />
-
         {createMode ? (
           <CreateTaskForm
             onCreateTask={(taskData) => {

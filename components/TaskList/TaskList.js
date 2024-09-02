@@ -5,20 +5,26 @@ const StyledList = styled.ul`
   list-style-type: none;
 `;
 
-const StyledTitleCompleted = styled.h2`
-  text-align: center;
+const StyledTitle = styled.h1`
+  text-align: ${(props) => (props.isCompletedView ? "center" : "left")};
 `;
 
-export default function TaskList({ title, tasks = [], toggleIsCompleted }) {
+export default function TaskList({
+  title,
+  tasks = [],
+  toggleIsCompleted,
+  isCompletedView = false,
+}) {
   return (
     <>
-      <h1>{title}</h1> {/* Заголовок для поточного списку завдань */}
+      <StyledTitle isCompletedView={isCompletedView}>{title}</StyledTitle>{" "}
       <StyledList>
         {tasks.map((task) => (
           <Task
             key={task.id}
             task={task}
             toggleIsCompleted={toggleIsCompleted}
+            isCompletedView={isCompletedView}
           />
         ))}
       </StyledList>

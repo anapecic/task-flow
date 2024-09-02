@@ -8,6 +8,7 @@ import Link from "next/link";
 import Modal from "@/components/Modal/Modal";
 import { useState } from "react";
 import { StyledMarkCompleted } from "@/components/StyledMarkCompleted";
+import { StyledTaskWrapperTop } from "@/components/StyledTaskWrapperTop";
 
 const StyledDetailsPage = styled.section`
   border: 1px solid #000000;
@@ -36,7 +37,8 @@ const StyledBackLink = styled(Link)`
 export default function DetailsPage({
   currentTasks,
   handleConfirm,
-  // toggleIsCompleted,
+  toggleIsCompleted,
+  isCompletedView,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -55,20 +57,34 @@ export default function DetailsPage({
   const dueDate = new Date(currentTask?.dueDate);
   const pastDueDate = today >= dueDate;
 
+  const handleMarkAsCompleted = (event) => {
+    event.preventDefault();
+
+    if (currentTask && currentTask.id) {
+      toggleIsCompleted(currentTask.id);
+    } else {
+    }
+
+    router.push("/");
+  };
+
   return (
     <>
       <Header />
       <StyledDetailsPage isCompleted={currentTask.isCompleted}>
-        <StyledTaskFlexWrapper>
-          <StyledPriority $priority={currentTask.priority} />
-          <StyledDate $dateColor={pastDueDate ? "red" : "black"}>
-            {currentTask.dueDate}
-          </StyledDate>
-        </StyledTaskFlexWrapper>
-        {/* <StyledMarkCompleted
-          checked={currentTask.isCompleted}
-          onClick={() => toggleIsCompleted(currentTask.id)} // Виправлено
-        ></StyledMarkCompleted> */}
+        <StyledTaskWrapperTop>
+          <StyledTaskFlexWrapper>
+            <StyledPriority $priority={currentTask.priority} />
+            <StyledDate $dateColor={pastDueDate ? "red" : "black"}>
+              {currentTask.dueDate}
+            </StyledDate>
+          </StyledTaskFlexWrapper>
+          <StyledMarkCompleted
+            onClick={handleMarkAsCompleted}
+            isCompletedView={isCompletedView} // Передача прапорця
+          />
+        </StyledTaskWrapperTop>
+
         <h3>{currentTask.title}</h3>
         <StyledDescription>
           <p>{currentTask.description}</p>
