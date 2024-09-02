@@ -41,7 +41,7 @@ export default function HomePage({
         <TaskList
           title="Completed Tasks" // Заголовок для завершених завдань
           tasks={completedTasks}
-          toggleIsCompleted={toggleIsCompleted}
+          toggleIsCompleted={toggleIsCompleted} //Hier muss ein Prop übergeben werden, der die Completed Tasks anders rendert als die Current Tasks.
         />
 
         {createMode ? (

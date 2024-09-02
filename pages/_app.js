@@ -8,12 +8,7 @@ import { useRouter } from "next/router";
 export default function App({ Component, pageProps }) {
   const sortedDefaultTasks = sortedByDate(initialTasks);
   const [currentTasks, setCurrentTasks] = useState(sortedDefaultTasks);
-  const [completedTasks, setCompletedTasks] = useState(
-    sortedByDate(sortedDefaultTasks.filter((task) => task.isCompleted))
-  );
-
-  console.log("Привіт1", currentTasks);
-  console.log("Привіт2", completedTasks);
+  const [completedTasks, setCompletedTasks] = useState([]);
 
   function onCreateTask(taskData) {
     console.log(taskData);
@@ -30,32 +25,26 @@ export default function App({ Component, pageProps }) {
   }
 
   function toggleIsCompleted(id) {
-    setCurrentTasks((prevCurrentTasks) => {
-      const taskToToggle = prevCurrentTasks.find((task) => task.id === id);
+    const newTask = currentTasks.find((task) => task.id === id);
 
-      if (taskToToggle) {
-        const updatedTask = {
-          ...taskToToggle,
-          isCompleted: !taskToToggle.isCompleted,
-        };
-
-        const newCurrentTasks = updatedTask.isCompleted
-          ? prevCurrentTasks.filter((task) => task.id !== id)
-          : [...prevCurrentTasks, updatedTask];
-
-        setCompletedTasks((prevCompletedTasks) => {
-          const newCompletedTasks = updatedTask.isCompleted
-            ? sortedByDate([...prevCompletedTasks, updatedTask])
-            : prevCompletedTasks.filter((task) => task.id !== id);
-
-          return newCompletedTasks;
-        });
-
-        return sortedByDate(newCurrentTasks);
-      }
-
-      return prevCurrentTasks;
-    });
+    if (newTask) {
+      const filteredCurrentTasks = currentTasks.filter(
+        (task) => task.id !== id
+      );
+      setCurrentTasks(filteredCurrentTasks);
+      setCompletedTasks([...completedTasks, newTask]);
+    } else if (!newTask) {
+      const newCompletedTask = completedTasks.find((task) => task.id === id);
+      const filteredCompletedTasks = completedTasks.filter(
+        (task) => task.id !== id
+      );
+      setCompletedTasks(filteredCompletedTasks);
+      const sortedCurrentTasks = sortedByDate([
+        ...currentTasks,
+        newCompletedTask,
+      ]);
+      setCurrentTasks(sortedCurrentTasks);
+    }
   }
 
   return (
