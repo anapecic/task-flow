@@ -7,6 +7,8 @@ import { StyledDate } from "@/components/StyledDate";
 import Link from "next/link";
 import Modal from "@/components/Modal/Modal";
 import { useState } from "react";
+import { StyledMarkCompleted } from "@/components/StyledMarkCompleted";
+import { StyledTaskWrapperTop } from "@/components/StyledTaskWrapperTop";
 
 const StyledDetailsPage = styled.section`
   border: 1px solid #000000;
@@ -30,7 +32,12 @@ const StyledBackLink = styled(Link)`
   color: white;
 `;
 
-export default function DetailsPage({ currentTasks, handleConfirm }) {
+export default function DetailsPage({
+  currentTasks,
+  handleConfirm,
+  toggleIsCompleted,
+  isCompletedView,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const dynamicId = router.query.id;
@@ -48,16 +55,34 @@ export default function DetailsPage({ currentTasks, handleConfirm }) {
   const dueDate = new Date(currentTask?.dueDate);
   const pastDueDate = today >= dueDate;
 
+  const handleMarkAsCompleted = (event) => {
+    event.preventDefault();
+
+    if (currentTask && currentTask.id) {
+      toggleIsCompleted(currentTask.id);
+    } else {
+    }
+
+    router.push("/");
+  };
+
   return (
     <>
       <Header />
       <StyledDetailsPage>
-        <StyledTaskFlexWrapper>
-          <StyledPriority $priority={currentTask.priority} />
-          <StyledDate $dateColor={pastDueDate ? "red" : "black"}>
-            {currentTask.dueDate}
-          </StyledDate>
-        </StyledTaskFlexWrapper>
+        <StyledTaskWrapperTop>
+          <StyledTaskFlexWrapper>
+            <StyledPriority $priority={currentTask.priority} />
+            <StyledDate $dateColor={pastDueDate ? "red" : "black"}>
+              {currentTask.dueDate}
+            </StyledDate>
+          </StyledTaskFlexWrapper>
+          <StyledMarkCompleted
+            onClick={handleMarkAsCompleted}
+            isCompletedView={isCompletedView}
+          />
+        </StyledTaskWrapperTop>
+
         <h3>{currentTask.title}</h3>
         <StyledDescription>
           <p>{currentTask.description}</p>
