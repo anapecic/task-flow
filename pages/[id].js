@@ -14,8 +14,6 @@ const StyledDetailsPage = styled.section`
   border: 1px solid #000000;
   padding: 1rem;
   margin: 0.5rem;
-  background-color: ${(props) =>
-    props.isCompleted ? "rgba(71, 70, 70, 0.267)" : "transparent"};
 `;
 
 const StyledDescription = styled.aside`
@@ -71,7 +69,7 @@ export default function DetailsPage({
   return (
     <>
       <Header />
-      <StyledDetailsPage isCompleted={currentTask.isCompleted}>
+      <StyledDetailsPage>
         <StyledTaskWrapperTop>
           <StyledTaskFlexWrapper>
             <StyledPriority $priority={currentTask.priority} />
@@ -81,7 +79,7 @@ export default function DetailsPage({
           </StyledTaskFlexWrapper>
           <StyledMarkCompleted
             onClick={handleMarkAsCompleted}
-            isCompletedView={isCompletedView} // Передача прапорця
+            isCompletedView={isCompletedView}
           />
         </StyledTaskWrapperTop>
 

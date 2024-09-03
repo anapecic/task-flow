@@ -16,10 +16,10 @@ const StyledTask = styled.li`
   padding: 1rem;
   margin: 0.5rem;
   background-color: ${(props) =>
-    props.isCompleted ? "rgba(71, 70, 70, 0.267)" : "transparent"};
+    props.isCompletedView ? "rgba(71, 70, 70, 0.267)" : "transparent"};
 `;
 
-const StyledTaskTitle = styled.h2``; // Можливо треба змінити
+const StyledTaskTitle = styled.h3``;
 
 export default function Task({ task, toggleIsCompleted, isCompletedView }) {
   const today = new Date();
@@ -28,13 +28,18 @@ export default function Task({ task, toggleIsCompleted, isCompletedView }) {
 
   const handleMarkAsCompleted = (event) => {
     event.preventDefault();
-
     toggleIsCompleted(task.id);
   };
 
+  const handleLinkClick = (event) => {
+    if (isCompletedView) {
+      event.preventDefault();
+    }
+  };
+
   return (
-    <StyledLink href={`/${task.id}`}>
-      <StyledTask isCompleted={task.isCompleted}>
+    <StyledLink href={`/${task.id}`} onClick={handleLinkClick}>
+      <StyledTask isCompletedView={isCompletedView}>
         <StyledTaskWrapperTop>
           <StyledTaskFlexWrapper>
             <StyledPriority $priority={task.priority} />
